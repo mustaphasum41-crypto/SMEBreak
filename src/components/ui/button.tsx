@@ -17,7 +17,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         choice:
-          "border-2 border-border bg-card text-foreground hover:border-primary/50 data-[selected=true]:border-primary data-[selected=true]:bg-secondary data-[selected=true]:text-secondary-foreground",
+          "border-2 border-border bg-card text-foreground hover:border-primary/50 data-[selected=true]:border-primary data-[selected=true]:bg-secondary data-[selected=true]:text-secondary-foreground data-[status=active]:border-primary data-[status=active]:bg-secondary",
         nav: "text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground data-[status=active]:bg-primary-foreground/15 data-[status=active]:text-primary-foreground",
       },
       size: {

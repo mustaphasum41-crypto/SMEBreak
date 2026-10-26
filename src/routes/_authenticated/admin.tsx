@@ -58,7 +58,7 @@ function AdminLayout() {
       <div className="mb-6 flex flex-wrap gap-2 border-b pb-3">
         {tabs.map((t) => (
           <Button key={t.to} asChild variant="choice" size="sm" className="border">
-            <Link to={t.to} activeOptions={{ exact: true }} activeProps={{ "data-selected": true } as Record<string, unknown>}>
+            <Link to={t.to} activeOptions={{ exact: true }}>
               {t.label}
             </Link>
           </Button>
