@@ -55,7 +55,7 @@ export function ActiveBoard({ admin = false }: { admin?: boolean }) {
 
   if (isLoading)
     return (
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-4 2xl:grid-cols-2">
         <Skeleton className="h-64 rounded-2xl" />
         <Skeleton className="h-64 rounded-2xl" />
       </div>
@@ -63,7 +63,7 @@ export function ActiveBoard({ admin = false }: { admin?: boolean }) {
 
   return (
     <>
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-4 2xl:grid-cols-2">
         {FLOORS.map((f) => {
           const list = (breaks ?? []).filter((b) => b.floor === f);
           return (
