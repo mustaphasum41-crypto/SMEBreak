@@ -34,7 +34,7 @@ export function ActiveBoard({ admin = false }: { admin?: boolean }) {
     setBusy(true);
     const { data, error } = await supabase.rpc("end_break", { _break_id: ending.id, _ended_by: endedBy });
     setBusy(false);
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     const r = data as unknown as BreakRow;
     const dur = new Date(r.ended_at!).getTime() - new Date(r.started_at).getTime();
     toast.success(`${r.sme_name}'s break ended`, { description: `Total duration ${formatDuration(dur)}` });
@@ -47,7 +47,7 @@ export function ActiveBoard({ admin = false }: { admin?: boolean }) {
     setBusy(true);
     const { error } = await supabase.rpc("admin_remove_break", { _break_id: removing.id });
     setBusy(false);
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success(`Break removed for ${removing.sme_name}`);
     setRemoving(null);
     qc.invalidateQueries({ queryKey: ["breaks"] });

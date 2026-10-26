@@ -65,9 +65,9 @@ export function BreakCard({
 }: {
   b: BreakRow;
   now: number | null;
-  timeZone?: string;
+  timeZone?: string | undefined;
   onEnd?: () => void;
-  onRemove?: () => void;
+  onRemove?: (() => void) | undefined;
   busy?: boolean;
 }) {
   const elapsed = now ? now - new Date(b.started_at).getTime() : 0;

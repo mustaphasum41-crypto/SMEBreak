@@ -31,7 +31,7 @@ function SettingsPage() {
     setBusy(true);
     const { error } = await supabase.from("app_settings").update({ timezone: tz, updated_at: new Date().toISOString() }).eq("id", 1);
     setBusy(false);
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success("Timezone saved");
     qc.invalidateQueries({ queryKey: ["settings"] });
   }

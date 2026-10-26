@@ -38,11 +38,11 @@ function SmeManagement() {
   async function add(e: React.FormEvent) {
     e.preventDefault();
     const n = name.trim();
-    if (!n) return toast.error("Enter a name.");
-    if (n.length > 80) return toast.error("Name must be 80 characters or fewer.");
-    if (exists(n)) return toast.error("An SME with that name already exists.");
+    if (!n) { toast.error("Enter a name."); return; }
+    if (n.length > 80) { toast.error("Name must be 80 characters or fewer."); return; }
+    if (exists(n)) { toast.error("An SME with that name already exists."); return; }
     const { error } = await supabase.from("smes").insert({ name: n });
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success(`${n} added`);
     setName("");
     refresh();
@@ -50,10 +50,10 @@ function SmeManagement() {
 
   async function saveEdit(id: string) {
     const n = editName.trim();
-    if (!n) return toast.error("Name can't be empty.");
-    if (exists(n, id)) return toast.error("An SME with that name already exists.");
+    if (!n) { toast.error("Name can't be empty."); return; }
+    if (exists(n, id)) { toast.error("An SME with that name already exists."); return; }
     const { error } = await supabase.from("smes").update({ name: n }).eq("id", id);
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success("Name updated");
     setEditing(null);
     refresh();
@@ -61,7 +61,7 @@ function SmeManagement() {
 
   async function setActive(s: Sme, active: boolean) {
     const { error } = await supabase.from("smes").update({ active }).eq("id", s.id);
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success(active ? `${s.name} restored` : `${s.name} deactivated`);
     refresh();
   }
@@ -69,7 +69,7 @@ function SmeManagement() {
   async function remove() {
     if (!deleting) return;
     const { error } = await supabase.from("smes").delete().eq("id", deleting.id);
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success(`${deleting.name} removed. Past breaks stay in history.`);
     setDeleting(null);
     refresh();
