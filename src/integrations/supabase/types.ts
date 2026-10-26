@@ -14,16 +14,167 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      app_settings: {
+        Row: {
+          id: number
+          timezone: string
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          timezone?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          timezone?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      breaks: {
+        Row: {
+          break_type: string
+          business_date: string
+          ended_at: string | null
+          ended_by: string | null
+          floor: number
+          id: string
+          sme_id: string | null
+          sme_name: string
+          started_at: string
+        }
+        Insert: {
+          break_type: string
+          business_date: string
+          ended_at?: string | null
+          ended_by?: string | null
+          floor: number
+          id?: string
+          sme_id?: string | null
+          sme_name: string
+          started_at?: string
+        }
+        Update: {
+          break_type?: string
+          business_date?: string
+          ended_at?: string | null
+          ended_by?: string | null
+          floor?: number
+          id?: string
+          sme_id?: string | null
+          sme_name?: string
+          started_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "breaks_sme_id_fkey"
+            columns: ["sme_id"]
+            isOneToOne: false
+            referencedRelation: "smes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      smes: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      admin_clear_active: { Args: never; Returns: number }
+      admin_remove_break: { Args: { _break_id: string }; Returns: undefined }
+      current_business_date: { Args: never; Returns: string }
+      daily_rollover: { Args: never; Returns: number }
+      end_break: {
+        Args: { _break_id: string; _ended_by: string }
+        Returns: {
+          break_type: string
+          business_date: string
+          ended_at: string | null
+          ended_by: string | null
+          floor: number
+          id: string
+          sme_id: string | null
+          sme_name: string
+          started_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "breaks"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      server_now: { Args: never; Returns: string }
+      start_break: {
+        Args: { _break_type: string; _floor: number; _sme_id: string }
+        Returns: {
+          break_type: string
+          business_date: string
+          ended_at: string | null
+          ended_by: string | null
+          floor: number
+          id: string
+          sme_id: string | null
+          sme_name: string
+          started_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "breaks"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +301,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+    },
   },
 } as const
